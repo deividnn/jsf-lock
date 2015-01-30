@@ -5,7 +5,7 @@ primfaces 5.1<br/>
 hibernate orm 4.3.8<br/>
 hibernate validator 5.1.3<br/>
 postgresql 9.3<br/>
-tomca 8.0.15<br/>
+tomcat 8.0.15<br/>
 netbeans 8.2<br/>
 <br/><br/>
 projeto que usa a anotacao @Version do jpa<br/>
