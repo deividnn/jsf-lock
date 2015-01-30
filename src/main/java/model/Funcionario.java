@@ -40,7 +40,7 @@ public class Funcionario implements Serializable {
    
     @NotNull
     @Size(min = 1, max = 14)
-    @Column(nullable = false, length = 14)
+    @Column(nullable = false, length = 14,unique = true)
     @CPF
     @NotEmpty
     private String cpf;
@@ -54,7 +54,7 @@ public class Funcionario implements Serializable {
     @NotNull
     @NotEmpty
     @Size(min = 1, max = 80)
-    @Column(nullable = false, length = 80)
+    @Column(nullable = false, length = 80,unique = true)
     private String nome;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
    
