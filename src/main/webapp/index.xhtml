@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Funcionarios</title>
+    </h:head>
+    <h:body>
+
+        <h:form id='funcionario'>
+            <p:messages autoUpdate="true"/>
+            <p:focus context="@form"/>
+
+            <p:panelGrid id="panel" 
+                         columns="2">                             
+
+                <p:outputLabel value="Nome:" for="nome"/>
+                <p:inputText value="#{funcionarioBean.funcionario.nome}"
+                             size="40"
+                             label="nome"
+                             id="nome"
+                             placeholder="nome"/>
+
+                <p:outputLabel value="CPF:" for="cpf"/>
+                <p:inputMask value="#{funcionarioBean.funcionario.cpf}"   
+                             mask="999.999.999-99"
+                             label="CPF"
+                             id="cpf"
+                             placeholder="cpf"/>
+
+                <p:outputLabel value="Data Nascimento:" for="nascimento"/>
+                <p:calendar value="#{funcionarioBean.funcionario.nascimento}"
+                            pattern="dd/MM/yyyy"
+                            mask="99/99/9999"
+                            label="nascimento"
+                            id="nascimento"
+                            placeholder="nascimento"/>
+
+                <p:outputLabel value="Salario:" for="salario"/>
+                <p:inputText value="#{funcionarioBean.funcionario.salario}"
+                             maxlength="15"
+                             label="salario"
+                             id="salario"
+                             placeholder="salario">
+                    <f:convertNumber maxFractionDigits="2"
+                                     minFractionDigits="2"
+                                     locale="pt_BR"/>
+                </p:inputText>
+
+                <p:outputLabel value="Status:" for="status"/>
+                <p:selectOneMenu value="#{funcionarioBean.funcionario.status}"
+                                 label="status"
+                                 id="status" >
+                    <f:selectItem itemValue="Ativo" itemLabel="Ativo"/>
+                    <f:selectItem itemValue="Inativo" itemLabel="Inativo"/>
+                    <f:selectItem itemValue="Bloqueado" itemLabel="Bloqueado"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Versao:"
+                               rendered="#{funcionarioBean.funcionario.id ne null}"/>
+                <p:inputText value="#{funcionarioBean.funcionario.versao + 1}"
+                             disabled="true"
+                             rendered="#{funcionarioBean.funcionario.id ne null}"/>
+
+                <p:outputLabel value="Data Alteracao:"
+                               rendered="#{funcionarioBean.funcionario.id ne null}"/>
+                <p:inputText value="#{funcionarioBean.funcionario.alteracao}"
+                             disabled="true"
+                             rendered="#{funcionarioBean.funcionario.id ne null}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                </p:inputText>
+
+                <p:commandButton value="salvar"
+                                 onstart="PF('statusDialog').show();"
+                                 onsuccess="PF('statusDialog').hide();"
+                                 update="@form"
+                                 process="panel"
+                                 actionListener="#{funcionarioBean.salvar()}">
+                    <p:confirm header="Confirmação" 
+                               message="Tem certeza?" 
+                               icon="ui-icon-alert" />
+                </p:commandButton>
+
+                <p:commandButton value="novo"
+                                 onstart="PF('statusDialog').show();"
+                                 onsuccess="PF('statusDialog').hide();"
+                                 update="@form"
+                                 process="panel"
+                                 immediate="true"
+                                 actionListener="#{funcionarioBean.novo()}"/>
+
+
+            </p:panelGrid>
+            <p:dataTable value="#{funcionarioBean.lista}"
+                         var="f"
+                         scrollable="true"
+                         scrollHeight="200"
+                         emptyMessage="vazio">
+
+                <p:column headerText="Id" >
+                    <h:outputText value="#{f.id}"/>
+                </p:column>
+
+                <p:column headerText="Nome">
+                    <h:outputText value="#{f.nome}"/>
+                </p:column>
+
+                <p:column headerText="CPF">
+                    <h:outputText value="#{f.cpf}"/>
+                </p:column>
+
+
+
+                <p:column headerText="Status" >
+                    <h:outputText value="#{f.status}"/>
+                </p:column>
+
+
+                <p:column >
+                    <p:commandButton value="editar"
+                                     update="@form"
+                                     immediate="true"
+                                     onstart="PF('statusDialog').show();"
+                                     onsuccess="PF('statusDialog').hide();"
+                                     actionListener="#{funcionarioBean.editar(f)}"/>
+                </p:column>
+                <p:column >
+
+                    <p:commandButton value="excluir"
+                                     update="@form"
+                                     immediate="true"
+                                     onstart="PF('statusDialog').show();"
+                                     onsuccess="PF('statusDialog').hide();"
+                                     actionListener="#{funcionarioBean.excluir(f)}">
+                        <p:confirm header="Confirmação" 
+                                   message="Tem certeza?" 
+                                   icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+
+        </h:form>
+
+        <p:dialog draggable="false"  modal="true" widgetVar="statusDialog" header="Status"   
+                  closable="false" closeOnEscape="false" resizable="false">  
+            <p:outputLabel value="Processando..."/> 
+        </p:dialog>   
+
+        <h:form>
+            <p:confirmDialog global="true" widgetVar="ls">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+
+
+    </h:body>
+</html>
+
