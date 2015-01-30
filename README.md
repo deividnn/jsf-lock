@@ -4,6 +4,7 @@ jsf 2.2.9<br/>
 hibernate 4.3.8<br/>
 postgresql 9.3<br/>
 tomca 8.0.15<br/>
+netbeans 8.2<br/>
 <br/><br/>
 projeto que usa a anotacao @Version do jpa<br/>
 para verificar se o registro esta atualizado antes <br/>
