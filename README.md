@@ -2,6 +2,7 @@
 <br/><br/>
 jsf 2.2.9<br/>
 hibernate 4.3.8<br/>
+hibernate validator 5.1.3<br/>
 postgresql 9.3<br/>
 tomca 8.0.15<br/>
 netbeans 8.2<br/>
