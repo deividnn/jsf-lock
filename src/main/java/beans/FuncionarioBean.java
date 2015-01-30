@@ -47,32 +47,38 @@ public class FuncionarioBean implements Serializable {
     public void novo() {
         this.funcionario = new Funcionario();
         listar();
+        atualizarLimpar();
+    }
+
+    private void atualizarLimpar() {
         Util.atualizarComponente("funcionario");
         Util.resetarComponente("funcionario");
     }
 
     public void editar(Funcionario f) {
         FuncionarioRN rn = new FuncionarioRN();
-
-        String hql = "SELECT vo FROM Funcionario vo "
-                + " WHERE vo.id=" + f.getId() + "";
-        Funcionario fu = rn.pegar(hql);
+        Funcionario fu = pegarFuncionario(f,rn);
 
         this.funcionario = fu;
-        Util.atualizarComponente("funcionario");
-        Util.resetarComponente("funcionario");
+        atualizarLimpar();
     }
 
     public void excluir(Funcionario f) {
         FuncionarioRN rn = new FuncionarioRN();
-
-        String hql = "SELECT vo FROM Funcionario vo "
-                + " WHERE vo.id=" + f.getId() + "";
-        Funcionario fu = rn.pegar(hql);
+        Funcionario fu = pegarFuncionario(f,rn);
 
         if (rn.excluir(fu)) {
             novo();
         }
+    }
+    
+    
+    private Funcionario pegarFuncionario(Funcionario f,FuncionarioRN rn) {
+        
+        String hql = "SELECT vo FROM Funcionario vo "
+                + " WHERE vo.id=" + f.getId() + "";
+        Funcionario fu = rn.pegar(hql);
+        return fu;
     }
 
     public Funcionario getFuncionario() {
