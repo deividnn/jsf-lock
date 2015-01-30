@@ -13,3 +13,6 @@ para verificar se o registro esta atualizado antes <br/>
 de atualizar, mostrando mensagens caso:<br/>
 -o registro atual for de uma versao anterior<br/>
 -o registro foi excluido por outra transacao<br/>
+
+<br/><br/>
+<span style='color:red'>configurar o arquivo src/main/resources/hibernate.cfg.xml</span>
