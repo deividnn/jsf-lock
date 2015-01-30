@@ -29,13 +29,38 @@ public class FuncionarioRN implements Serializable {
             funcionario.setAlteracao(new Date());
 
             if (funcionario.getId() == null) {
-                this.dao.salvar(funcionario);
-                Util.criarMensagem("inserido");
-                return true;
+
+                String hql = "SELECT vo FROM Funcionario vo"
+                        + " WHERE vo.cpf='" + funcionario.getCpf() + "'"
+                        + " OR vo.nome='" + funcionario.getNome() + "'";
+                Funcionario verifica = this.dao.pegar(hql);
+
+                if (verifica == null) {
+                    this.dao.salvar(funcionario);
+                    Util.criarMensagem("inserido");
+                    return true;
+                } else {
+                    Util.criarMensagemErro("ja existe");
+                    return false;
+                }
+
             } else {
-                this.dao.atualizar(funcionario);
-                Util.criarMensagemAviso("atualizado");
-                return true;
+
+                String hql = "SELECT vo FROM Funcionario vo"
+                        + " WHERE (vo.cpf='" + funcionario.getCpf() + "'"
+                        + " OR vo.nome='" + funcionario.getNome() + "')"
+                        + " AND vo.id!=" + funcionario.getId() + "";
+                Funcionario verifica = this.dao.pegar(hql);
+
+                if (verifica == null) {
+                    this.dao.atualizar(funcionario);
+                    Util.criarMensagemAviso("atualizado");
+                    return true;
+                } else {
+                    Util.criarMensagemErro("ja existe");
+                    return false;
+                }
+
             }
         } catch (Exception e) {
             System.out.println("erro(rn): " + e);
