@@ -28,6 +28,7 @@ public class DAOImpl<T> implements DAO<T> {
             return true;
         } catch (Exception e) {
             System.out.println("erro(dao): " + e);
+            Util.criarMensagemErro("Erro: " + e);
             return false;
         }
     }
@@ -42,8 +43,9 @@ public class DAOImpl<T> implements DAO<T> {
             if (e instanceof StaleObjectStateException) {
                 StaleObjectStateException ex = (StaleObjectStateException) e;
                 Util.criarMensagemErro("Erro: " + ex.getEntityName() + " foi alterado recentemente (atualize a pagina)");
-                throw new HibernateException(ex);
+                return false;
             }
+
             return false;
         }
     }
@@ -67,8 +69,10 @@ public class DAOImpl<T> implements DAO<T> {
             return (T) this.sessao.createQuery(hql).uniqueResult();
         } catch (Exception e) {
             System.out.println("erro(dao): " + e);
+            Util.criarMensagemErro("Erro: " + e);
+            return null;
         }
-        return null;
+
     }
 
     @Override
@@ -77,6 +81,7 @@ public class DAOImpl<T> implements DAO<T> {
             return this.sessao.createQuery(hql).list();
         } catch (Exception e) {
             System.out.println("erro(dao): " + e);
+            Util.criarMensagemErro("Erro: " + e);
         }
         return null;
     }
