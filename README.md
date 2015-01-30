@@ -15,4 +15,4 @@ de atualizar, mostrando mensagens caso:<br/>
 -o registro foi excluido por outra transacao<br/>
 
 <br/><br/>
-<b>configurar o arquivo src/main/resources/hibernate.cfg.xml</b>
+<b>configurar o arquivo src/main/webapp/META-INF/context.xml</b>
